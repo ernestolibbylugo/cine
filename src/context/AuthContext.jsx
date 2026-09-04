@@ -1,35 +1,58 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [cargando, setCargando] = useState(true);
 
-  // Al cargar la app, recuperamos la sesión si existe en localStorage
   useEffect(() => {
-    const usuarioGuardado = localStorage.getItem('usuario_cine');
-    if (usuarioGuardado) {
-      setUser(JSON.parse(usuarioGuardado));
+    const storedUser = localStorage.getItem("cine_user");
+
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
+
     setCargando(false);
   }, []);
 
   const login = (userData) => {
     setUser(userData);
-    localStorage.setItem('usuario_cine', JSON.stringify(userData)); // Guardar
+    localStorage.setItem(
+      "cine_user",
+      JSON.stringify(userData)
+    );
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('usuario_cine'); // Limpiar
+    localStorage.removeItem("cine_user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, cargando }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        logout,
+        cargando,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error(
+      "useAuth debe utilizarse dentro de AuthProvider"
+    );
+  }
+
+  return context;
+}
+
+export default AuthContext;
