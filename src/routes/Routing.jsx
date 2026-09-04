@@ -21,7 +21,11 @@ function Routing() {
       <Route path="/cartelera" element={<Cartelera />} />
       <Route path="/acceso-denegado" element={<AccesoDenegado />} />
 
-      <Route element={<RutaProtegida rolesPermitidos={["admin", "user"]} />}>
+      <Route
+        element={
+          <RutaProtegida rolesPermitidos={["admin", "user"]} />
+        }
+      >
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/comprar" element={<ComprarBoletos />} />
         <Route path="/asientos" element={<Asientos />} />
@@ -29,7 +33,11 @@ function Routing() {
         <Route path="/resumen" element={<ResumenCompra />} />
       </Route>
 
-      <Route element={<RutaProtegida rolesPermitidos={["admin"]} />}>
+      <Route
+        element={
+          <RutaProtegida rolesPermitidos={["admin"]} />
+        }
+      >
         <Route path="/admin" element={<AdminPanel />} />
       </Route>
 
