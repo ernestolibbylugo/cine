@@ -1,0 +1,12 @@
+import React, { createContext } from 'react';
+
+export const AuthContext = createContext(null);
+
+export function AuthProvider({ children }) {
+  // Estructura base; implementar autenticación más adelante
+  const value = { user: null };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
+
+export default AuthContext;
