@@ -1,0 +1,23 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin Cine",
+      "email": "admin@cine.com",
+      "password": "1234",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "name": "Usuario Cine",
+      "email": "user@cine.com",
+      "password": "1234",
+      "role": "user"
+    }
+  ],
+  "movies": [],
+  "shows": [],
+  "seats": [],
+  "snacks": [],
+  "purchases": []
+}

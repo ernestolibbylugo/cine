@@ -30,9 +30,11 @@ const Navbar = () => {
         justifyContent: 'space-between',
         alignItems: 'center',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        flexWrap: 'wrap',
+        gap: '1rem',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
         <NavLink
           to="/dashboard"
           style={{
@@ -48,18 +50,27 @@ const Navbar = () => {
           <span>🍿</span> CineApp
         </NavLink>
 
-        {user && (
-          <nav style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
-            <NavLink to="/dashboard" style={navLinkStyle}>
-              Dashboard
-            </NavLink>
-            {user.role === 'admin' && (
-              <NavLink to="/admin" style={navLinkStyle}>
-                Panel Admin
+        <nav style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <NavLink to="/cartelera" style={navLinkStyle}>
+            Cartelera
+          </NavLink>
+          <NavLink to="/dulceria" style={navLinkStyle}>
+            Dulcería
+          </NavLink>
+
+          {user && (
+            <>
+              <NavLink to="/dashboard" style={navLinkStyle}>
+                Dashboard
               </NavLink>
-            )}
-          </nav>
-        )}
+              {user.role === 'admin' && (
+                <NavLink to="/admin" style={navLinkStyle}>
+                  Panel Admin
+                </NavLink>
+              )}
+            </>
+          )}
+        </nav>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
