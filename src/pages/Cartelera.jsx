@@ -33,19 +33,28 @@ function Cartelera() {
   }
 
   return (
-    <main>
-      <h1>Cartelera</h1>
+    <main className="cartelera">
+      <h1 className="cartelera__titulo">Cartelera</h1>
 
       {movies.length === 0 ? (
         <p>No hay películas disponibles.</p>
       ) : (
-        <div>
+        <div className="cartelera__grid">
           {movies.map((movie) => (
-            <article key={movie.id}>
-              <h2>{movie.title}</h2>
-              <p>Género: {movie.genre}</p>
-              <p>Duración: {movie.duration} minutos</p>
-              <p>Clasificación: {movie.rating}</p>
+            <article className="pelicula-card" key={movie.id}>
+              <h2 className="pelicula-card__titulo">{movie.title}</h2>
+
+              <p>
+                <strong>Género:</strong> {movie.genre}
+              </p>
+
+              <p>
+                <strong>Duración:</strong> {movie.duration} minutos
+              </p>
+
+              <p>
+                <strong>Clasificación:</strong> {movie.rating}
+              </p>
             </article>
           ))}
         </div>
