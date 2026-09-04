@@ -1,35 +1,49 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import {
+  Navigate,
+  Outlet,
+  useLocation,
+} from "react-router-dom";
 
-/**
- * Componente Wrapper para proteger rutas según estado de autenticación y rol.
- * @param {Object} props
- * @param {Array<string>} props.rolesPermitidos - Lista de roles que tienen acceso (ej. ['admin', 'user'])
- */
-const RutaProtegida = ({ rolesPermitidos }) => {
+import { useAuth } from "../context/AuthContext";
+
+function RutaProtegida({ rolesPermitidos }) {
   const { user, cargando } = useAuth();
+  const location = useLocation();
 
-  // 1. Evita parpadeos o redirecciones en falso mientras se verifica la sesión
   if (cargando) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
-        <p>Cargando sesión...</p>
+      <div style={{ padding: "3rem" }}>
+        <p>Verificando permisos de acceso...</p>
       </div>
     );
   }
 
-  // 2. Si no hay usuario en sesión, redirige a /login
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return (
+      <Navigate
+        to="/login"
+        state={{ from: location }}
+        replace
+      />
+    );
   }
 
-  // 3. Si se especifican roles permitidos y el rol del usuario no coincide
-  if (rolesPermitidos && !rolesPermitidos.includes(user.role)) {
-    return <Navigate to="/acceso-denegado" replace />;
+  if (
+    rolesPermitidos &&
+    !rolesPermitidos.includes(user.role)
+  ) {
+    return (
+      <Navigate
+        to="/acceso-denegado"
+        state={{
+          mensaje: `El rol '${user.role}' no tiene autorización para acceder a esta sección.`,
+        }}
+        replace
+      />
+    );
   }
 
-  // 4. Si pasa todas las comprobaciones, renderiza las rutas hijas dentro del Outlet
   return <Outlet />;
-};
+}
 
 export default RutaProtegida;

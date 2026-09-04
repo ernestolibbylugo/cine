@@ -1,11 +1,16 @@
-import Routing from "./routes/Routing";
 import "./App.css";
+import Navbar from "./components/Navbar";
+import Routing from "./routes/Routing";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
-    <div className="app">
-      <Routing />
-    </div>
+    <AuthProvider>
+      <div className="app">
+        <Navbar />
+        <Routing />
+      </div>
+    </AuthProvider>
   );
 }
 
