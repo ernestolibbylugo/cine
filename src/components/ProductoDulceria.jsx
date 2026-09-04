@@ -1,5 +1,3 @@
-import React from 'react';
-
 function ProductoDulceria() {
   return (
     <div>
