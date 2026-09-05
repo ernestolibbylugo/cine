@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react';
 import ProductoDulceria from '../components/ProductoDulceria';
 
@@ -18,6 +19,62 @@ function Dulceria() {
       <div className="section-heading snack-heading"><div><span className="eyebrow">Para compartir</span><h2>Antojos de la casa</h2></div>{cart.length > 0 && <span className="cart-note">{cart.length} producto(s) agregado(s)</span>}</div>
       <section className="snack-grid">{products.map((product) => <ProductoDulceria key={product.name} product={product} onAdd={addProduct} />)}</section>
     </div>
+=======
+<<<<<<< HEAD
+=======
+import { useEffect, useState } from "react";
+
+>>>>>>> 4dea81b833245d2df20128e5113189ef4f53562c
+function Dulceria() {
+  const [snacks, setSnacks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:3001/snacks")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("No se pudo cargar la dulcería");
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        setSnacks(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <p>Cargando dulcería...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  return (
+    <main>
+      <h1>Dulcería</h1>
+
+      {snacks.length === 0 ? (
+        <p>No hay productos disponibles.</p>
+      ) : (
+        <div>
+          {snacks.map((snack) => (
+            <article key={snack.id}>
+              <h2>{snack.name}</h2>
+              <p>Precio: ₡{snack.price}</p>
+            </article>
+          ))}
+        </div>
+      )}
+    </main>
+>>>>>>> f9b822cad42e2b596bce367b4d0328697f77ccfc
   );
 }
 
