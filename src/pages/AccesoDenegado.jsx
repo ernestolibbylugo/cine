@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import { Link } from 'react-router-dom';
-
-const AccesoDenegado = () => (
-  <div className="page denied-page">
-    <h1>⛔ Acceso Denegado</h1>
-    <p>No tienes permisos para acceder aquí.</p>
-    <Link to="/dashboard" className="btn-link">
-      Volver al Dashboard
-    </Link>
-  </div>
-);
-=======
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -18,7 +5,6 @@ const AccesoDenegado = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
->>>>>>> 4dea81b833245d2df20128e5113189ef4f53562c
 
   const mensajeError = location.state?.mensaje || 'No tienes permisos para consultar esta sección.';
 

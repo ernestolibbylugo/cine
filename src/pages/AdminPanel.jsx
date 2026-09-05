@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-const AdminPanel = () => (
-  <div className="page admin-page">
-    <h1>Panel de Administración</h1>
-    <p>Solo administradores pueden ver esta sección.</p>
-    <div className="admin-actions">
-      <button className="btn-primary">Crear elemento</button>
-      <button className="btn-danger">Eliminar elemento</button>
-    </div>
-  </div>
-);
-=======
 import { useEffect, useState } from "react";
 
 function AdminPanel() {
@@ -56,7 +44,7 @@ function AdminPanel() {
   };
 
   return (
-    <main>
+    <main className="page admin-page">
       <h1>Panel de Administración</h1>
 
       {error && <p>{error}</p>}
@@ -64,14 +52,14 @@ function AdminPanel() {
       {movies.length === 0 ? (
         <p>No hay películas registradas.</p>
       ) : (
-        <div>
+        <div className="admin-actions">
           {movies.map((movie) => (
-            <article key={movie.id}>
+            <article className="info-card" key={movie.id}>
               <h2>{movie.title}</h2>
 
               <p>Género: {movie.genre}</p>
 
-              <button onClick={() => eliminarPelicula(movie.id)}>
+              <button className="btn-danger" onClick={() => eliminarPelicula(movie.id)}>
                 Eliminar película
               </button>
             </article>
@@ -81,6 +69,5 @@ function AdminPanel() {
     </main>
   );
 }
->>>>>>> 4dea81b833245d2df20128e5113189ef4f53562c
 
 export default AdminPanel;
