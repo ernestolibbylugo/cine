@@ -1,19 +1,39 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Asiento from '../components/Asiento';
+import { getSeats } from '../services/api';
 
 const seatRows = ['A', 'B', 'C', 'D', 'E', 'F'];
-const occupiedSeats = ['A3', 'B5', 'C2', 'D6', 'E1'];
 
 function Asientos() {
-  const [selectedSeats, setSelectedSeats] = useState(['A4']);
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const [occupiedSeats, setOccupiedSeats] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (!state?.show?.id) return;
+
+    getSeats(state.show.id)
+      .then((seats) => setOccupiedSeats(seats.filter((seat) => seat.status === 'occupied').map((seat) => seat.code)))
+      .catch((requestError) => setError(requestError.message))
+      .finally(() => setLoading(false));
+  }, [state?.show?.id]);
+
   const toggleSeat = (seat) => {
     setSelectedSeats((current) => current.includes(seat) ? current.filter((item) => item !== seat) : [...current, seat]);
   };
 
+  if (!state?.show) return <section className="page error-page"><p className="error-message">Selecciona una función antes de elegir tus asientos.</p><button className="btn-primary" type="button" onClick={() => navigate('/comprar')}>Volver a funciones</button></section>;
+  if (loading) return <p className="loading-session">Consultando disponibilidad...</p>;
+  if (error) return <section className="page error-page"><p className="error-message">{error}</p><button className="btn-primary" type="button" onClick={() => navigate('/comprar')}>Volver a funciones</button></section>;
+
   return (
     <div className="cinema-page seat-page">
       <div className="section-heading">
-        <div><span className="eyebrow">Sala 04 · Función 19:40</span><h1>Elige tus asientos</h1><p className="section-subtitle">Dune: Parte Dos · Miércoles 04 de septiembre</p></div>
+        <div><span className="eyebrow">Sala {state.show.room} · Función {state.show.time}</span><h1>Elige tus asientos</h1><p className="section-subtitle">{state.movie.title}</p></div>
         <div className="selected-summary"><strong>{selectedSeats.length}</strong><span>asientos elegidos</span></div>
       </div>
       <div className="screen">PANTALLA</div>
@@ -29,7 +49,7 @@ function Asientos() {
       </div>
       <div className="seat-footer">
         <div className="seat-legend"><span><i className="legend-dot available-dot" />Disponible</span><span><i className="legend-dot selected-dot" />Seleccionado</span><span><i className="legend-dot occupied-dot" />Ocupado</span></div>
-        <button type="button" className="btn-primary" disabled={!selectedSeats.length}>Continuar con {selectedSeats.length} boletos</button>
+        <button type="button" className="btn-primary" disabled={!selectedSeats.length} onClick={() => navigate('/resumen', { state: { ...state, selectedSeats } })}>Continuar con {selectedSeats.length} boletos</button>
       </div>
     </div>
   );

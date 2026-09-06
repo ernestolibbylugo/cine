@@ -10,10 +10,13 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="nav-brand">🍿 Equipo4 App</div>
+      <NavLink to="/" className="nav-brand">CINE / 04</NavLink>
       <div className="nav-links">
         <NavLink to="/cartelera" className={navLinkClass}>
           Cartelera
+        </NavLink>
+        <NavLink to="/comprar" className={navLinkClass}>
+          Comprar boletos
         </NavLink>
         <NavLink to="/dulceria" className={navLinkClass}>
           Dulcería

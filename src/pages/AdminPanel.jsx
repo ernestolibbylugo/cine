@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "../config";
 
 function AdminPanel() {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState("");
 
   const cargarPeliculas = () => {
-    fetch("http://localhost:3001/movies")
+    fetch(`${API_URL}/movies`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("No se pudieron cargar las películas");
@@ -26,7 +27,7 @@ function AdminPanel() {
   }, []);
 
   const eliminarPelicula = (id) => {
-    fetch(`http://localhost:3001/movies/${id}`, {
+    fetch(`${API_URL}/movies/${id}`, {
       method: "DELETE",
     })
       .then((response) => {

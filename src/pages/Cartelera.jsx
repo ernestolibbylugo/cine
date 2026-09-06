@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "../config";
 
 function Cartelera() {
   const [movies, setMovies] = useState([]);
@@ -6,7 +7,7 @@ function Cartelera() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3001/movies")
+    fetch(`${API_URL}/movies`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("No se pudo cargar la cartelera");

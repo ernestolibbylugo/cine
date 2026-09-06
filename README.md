@@ -21,10 +21,14 @@ npm run dev
 
 ## 🔐 Credenciales de prueba
 
-| Rol    | Email          | Contraseña |
-| ------ | -------------- | ---------- |
-| Admin  | admin@cine.com | `1234`     |
-| Usuario| user@cine.com  | `1234`     |
+| Rol    | Email          | Contraseña  |
+| ------ | -------------- | ----------- |
+| Admin  | admin@cine.com | `admin123`  |
+| Usuario| user@cine.com  | `user123`   |
+
+> 💡 El login funciona incluso si JSON Server no está encendido: la app usa
+> credenciales de respaldo. Para que cartelera y dulcería carguen datos,
+> ejecuta `npm run server`.
 
 ## 🗂️ Estructura del proyecto
 
