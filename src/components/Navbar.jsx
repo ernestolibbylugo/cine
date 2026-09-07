@@ -2,12 +2,14 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import LogoutButton from './LogoutButton';
 import logo from '../Img/logoCinemaSein.jpeg';
+import { usePurchases } from '../context/PurchaseContext';
 
 const navLinkClass = ({ isActive }) =>
   isActive ? 'nav-link active' : 'nav-link';
 
 const Navbar = () => {
   const { user } = useAuth();
+  const { cartCount } = usePurchases();
 
   return (
     <nav className="navbar">
@@ -21,6 +23,9 @@ const Navbar = () => {
         </NavLink>
         <NavLink to="/dulceria" className={navLinkClass}>
           Dulcería
+        </NavLink>
+        <NavLink to="/carrito" className={navLinkClass}>
+          Carrito <span className="nav-cart-count">{cartCount}</span>
         </NavLink>
 
         {user ? (

@@ -3,11 +3,21 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
+const getStoredUser = () => {
+  const stored = localStorage.getItem('cine_user');
+
+  if (!stored) return null;
+
+  try {
+    return JSON.parse(stored);
+  } catch {
+    localStorage.removeItem('cine_user');
+    return null;
+  }
+};
+
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem('cine_user');
-    return stored ? JSON.parse(stored) : null;
-  });
+  const [user, setUser] = useState(getStoredUser);
 
   // Flag de carga expuesto para que RutaProtegida muestre un estado estable
   const [cargando, setCargando] = useState(false);

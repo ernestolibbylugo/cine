@@ -8,6 +8,7 @@ import ComprarBoletos from "../pages/ComprarBoletos";
 import Asientos from "../pages/Asientos";
 import Dulceria from "../pages/Dulceria";
 import ResumenCompra from "../pages/ResumenCompra";
+import Carrito from "../pages/Carrito";
 import Dashboard from "../pages/Dashboard";
 import AdminPanel from "../pages/AdminPanel";
 import AccesoDenegado from "../pages/AccesoDenegado";
@@ -47,6 +48,7 @@ function Routing() {
         <Route path="/asientos" element={<Asientos />} />
         <Route path="/dulceria" element={<Dulceria />} />
         <Route path="/resumen" element={<ResumenCompra />} />
+        <Route path="/carrito" element={<Carrito />} />
       </Route>
 
       <Route

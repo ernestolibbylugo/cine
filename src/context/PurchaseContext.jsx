@@ -1,19 +1,25 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { API_URL } from "../config";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const PurchaseContext = createContext(null);
-const STORAGE_KEY = "cine_ticket_history";
+const TICKET_STORAGE_KEY = "cine_ticket_history";
+const CART_STORAGE_KEY = "cine-sein-cart";
 
 const readStoredTickets = () => {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    return JSON.parse(localStorage.getItem(TICKET_STORAGE_KEY)) || [];
   } catch {
     return [];
   }
 };
 
 export function PurchaseProvider({ children }) {
+  // Historial de entradas vendidas (usado por Dashboard y ResumenCompra)
   const [ticketSales, setTicketSales] = useState(readStoredTickets);
+
+  // Carrito de dulcería (API adicional, sin romper el historial)
+  const [items, setItems] = useLocalStorage(CART_STORAGE_KEY, []);
 
   useEffect(() => {
     let active = true;
@@ -34,7 +40,7 @@ export function PurchaseProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(ticketSales));
+    localStorage.setItem(TICKET_STORAGE_KEY, JSON.stringify(ticketSales));
   }, [ticketSales]);
 
   const addTicketSale = (purchase) => {
@@ -45,17 +51,28 @@ export function PurchaseProvider({ children }) {
     };
     setTicketSales((current) => [sale, ...current.filter((item) => item.id !== sale.id)]);
     return sale;
-  };
+ };
+
+  const addItem = (item, quantity = 1) => setItems((current) => {
+    const existing = current.find((cartItem) => cartItem.id === item.id);
+    return existing ? current.map((cartItem) => cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + quantity } : cartItem) : [...current, { ...item, quantity }];
+  });
+  const updateQuantity = (id, quantity) => setItems((current) => quantity < 1 ? current.filter((item) => item.id !== id) : current.map((item) => item.id === id ? { ...item, quantity } : item));
+  const clearCart = () => setItems([]);
+  const cartCount = items.reduce((total, item) => total + item.quantity, 0);
+  const value = { ticketSales, addTicketSale, items, addItem, updateQuantity, clearCart, cartCount };
 
   return (
-    <PurchaseContext.Provider value={{ ticketSales, addTicketSale }}>
+    <PurchaseContext.Provider value={value}>
       {children}
     </PurchaseContext.Provider>
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const usePurchases = () => {
   const context = useContext(PurchaseContext);
   if (!context) throw new Error("usePurchases debe usarse dentro de PurchaseProvider");
   return context;
 };
+

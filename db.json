@@ -94,6 +94,95 @@
       "status": "confirmed",
       "createdAt": "2026-09-07T01:03:05.473Z",
       "id": "2AX-k3iEvzE"
+    },
+    {
+      "userId": "1",
+      "snacks": [
+        {
+          "id": "3",
+          "name": "Combo pareja",
+          "quantity": 1
+        }
+      ],
+      "total": 6500,
+      "status": "confirmed",
+      "createdAt": "2026-09-07T02:22:40.806Z",
+      "id": "g8Sr-vCJ7YY"
+    },
+    {
+      "userId": "2",
+      "snacks": [
+        {
+          "id": "2",
+          "name": "Refresco grande",
+          "quantity": 1
+        },
+        {
+          "id": "3",
+          "name": "Combo pareja",
+          "quantity": 1
+        },
+        {
+          "id": "1",
+          "name": "Palomitas medianas",
+          "quantity": 1
+        }
+      ],
+      "total": 10800,
+      "status": "confirmed",
+      "createdAt": "2026-09-07T03:37:11.050Z",
+      "id": "vV1ezQ--ZIo"
+    },
+    {
+      "userId": "2",
+      "tickets": [
+        {
+          "movieId": "2",
+          "movieTitle": "La Última Noche",
+          "showId": "3",
+          "showTime": "19:30",
+          "quantity": 1
+        }
+      ],
+      "snacks": [],
+      "total": 4500,
+      "status": "confirmed",
+      "createdAt": "2026-09-07T03:54:26.115Z",
+      "id": "JWn19F5dJ00"
+    },
+    {
+      "userId": "2",
+      "tickets": [
+        {
+          "movieId": "1",
+          "movieTitle": "Galaxia Perdida",
+          "showId": "1",
+          "showTime": "18:00",
+          "quantity": 2
+        }
+      ],
+      "snacks": [],
+      "total": 9000,
+      "status": "confirmed",
+      "createdAt": "2026-09-07T03:54:40.033Z",
+      "id": "QN5kQSKYptU"
+    },
+    {
+      "userId": "2",
+      "tickets": [
+        {
+          "movieId": "1",
+          "movieTitle": "Galaxia Perdida",
+          "showId": "1",
+          "showTime": "18:00",
+          "quantity": 1
+        }
+      ],
+      "snacks": [],
+      "total": 4500,
+      "status": "confirmed",
+      "createdAt": "2026-09-07T04:41:16.127Z",
+      "id": "rGbEeG9Qa-w"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

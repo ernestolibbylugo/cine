@@ -18,14 +18,23 @@ export const useLocalStorage = (key, initialValue) => {
   });
 
   const setValue = (value) => {
+    setStoredValue((currentValue) => {
+      try {
+        return value instanceof Function ? value(currentValue) : value;
+      } catch (error) {
+        console.error(`Error guardando localStorage key "${key}":`, error);
+        return currentValue;
+      }
+    });
+  };
+
+  useEffect(() => {
     try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
-      setStoredValue(valueToStore);
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      window.localStorage.setItem(key, JSON.stringify(storedValue));
     } catch (error) {
       console.error(`Error guardando localStorage key "${key}":`, error);
     }
-  };
+  }, [key, storedValue]);
 
   // Sincronizar si cambia la key
   useEffect(() => {

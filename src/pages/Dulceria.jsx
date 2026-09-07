@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import popcornImage from "../Img/imgPalomita.jpeg";
 import sodaImage from "../Img/imgRefresco.jpeg";
 import comboImage from "../Img/imgComboPareja.jpeg";
+import { usePurchases } from "../context/PurchaseContext";
 
 const snackImages = {
   "Palomitas medianas": popcornImage,
@@ -22,6 +23,7 @@ function Dulceria() {
   const [cart, setCart] = useState([]);
   const [message, setMessage] = useState("");
   const { user } = useAuth();
+  const { addItem } = usePurchases();
 
   useEffect(() => {
     fetch(`${API_URL}/snacks`)
@@ -43,6 +45,12 @@ function Dulceria() {
   }, []);
 
   const addSnack = (snack) => {
+    addItem({
+      ...snack,
+      type: "snack",
+      title: snack.name,
+      image: snackImages[snack.name],
+    });
     setCart((current) => {
       const existing = current.find((item) => item.id === snack.id);
       if (existing) return current.map((item) => item.id === snack.id ? { ...item, quantity: item.quantity + 1 } : item);
