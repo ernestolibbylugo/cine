@@ -1,30 +1,15 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-/**
- * Componente que protege rutas según sesión y rol.
- * @param {Array<string>} [rolesPermitidos=['admin','user']] - Roles que tienen acceso.
- */
 const RutaProtegida = ({ rolesPermitidos = ['admin', 'user'] }) => {
   const { user, cargando } = useAuth();
+  const location = useLocation();
 
-  // 1. Evita parpadeos o redirecciones en falso mientras se verifica la sesión
-  if (cargando) {
-    return (
-      <div className="loading-session">
-        <p>Cargando sesión...</p>
-      </div>
-    );
+  if (cargando) return <div className="loading-session"><p>Verificando sesión...</p></div>;
+  if (!user) return <Navigate to="/login" state={{ from: location }} replace />;
+  if (!rolesPermitidos.includes(user.role)) {
+    return <Navigate to="/acceso-denegado" state={{ mensaje: `El rol '${user.role}' no tiene autorización para acceder a esta sección.` }} replace />;
   }
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (rolesPermitidos && !rolesPermitidos.includes(user.role)) {
-    return <Navigate to="/acceso-denegado" replace />;
-  }
-
   return <Outlet />;
 };
 

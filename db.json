@@ -1,23 +1,86 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Admin Cine",
       "email": "admin@cine.com",
       "password": "1234",
       "role": "admin"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Usuario Cine",
       "email": "user@cine.com",
       "password": "1234",
       "role": "user"
     }
   ],
-  "movies": [],
-  "shows": [],
-  "seats": [],
-  "snacks": [],
+  "movies": [
+    {
+      "id": 1,
+      "title": "Galaxia Perdida",
+      "genre": "Ciencia ficción",
+      "duration": 125,
+      "rating": "PG-13"
+    },
+    {
+      "id": 2,
+      "title": "La Última Noche",
+      "genre": "Suspenso",
+      "duration": 110,
+      "rating": "R"
+    }
+  ],
+  "shows": [
+    {
+      "id": 1,
+      "movieId": 1,
+      "time": "18:00",
+      "room": 1
+    },
+    {
+      "id": 2,
+      "movieId": 1,
+      "time": "21:00",
+      "room": 1
+    },
+    {
+      "id": 3,
+      "movieId": 2,
+      "time": "19:30",
+      "room": 2
+    }
+  ],
+  "seats": [
+    {
+      "id": 1,
+      "showId": 1,
+      "code": "A1",
+      "status": "available"
+    },
+    {
+      "id": 2,
+      "showId": 1,
+      "code": "A2",
+      "status": "occupied"
+    }
+  ],
+  "snacks": [
+    {
+      "id": 1,
+      "name": "Palomitas medianas",
+      "price": 2500
+    },
+    {
+      "id": 2,
+      "name": "Refresco grande",
+      "price": 1800
+    },
+    {
+      "id": 3,
+      "name": "Combo pareja",
+      "price": 6500
+    }
+  ],
   "purchases": []
 }

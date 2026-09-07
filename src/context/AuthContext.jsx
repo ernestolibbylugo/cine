@@ -1,47 +1,36 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem('cine_user');
-    return stored ? JSON.parse(stored) : null;
+    try {
+      const storedUser = localStorage.getItem('cine_user');
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch {
+      localStorage.removeItem('cine_user');
+      return null;
+    }
   });
 
-  // Flag de carga expuesto para que RutaProtegData muestre un estado estable
-  const [cargando, setCargando] = useState(false);
+  const cargando = false;
 
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('cine_user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('cine_user');
-    }
-  }, [user]);
-
-  const login = async (userData) => {
-    setCargando(true);
-    try {
-      setUser(userData);
-    } finally {
-      setCargando(false);
-    }
+  const login = (userData) => {
+    setUser(userData);
+    localStorage.setItem('cine_user', JSON.stringify(userData));
   };
 
-  const logout = () => setUser(null);
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('cine_user');
+  };
 
-  return (
-    <AuthContext.Provider value={{ user, cargando, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, cargando, login, logout }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth debe usarse dentro de un AuthProvider');
-  }
+  if (!context) throw new Error('useAuth debe utilizarse dentro de AuthProvider');
   return context;
 };
