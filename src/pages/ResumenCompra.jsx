@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { createPurchase } from "../services/api";
+import { usePurchases } from "../context/PurchaseContext";
+import { motion } from "framer-motion";
 
 const TICKET_PRICE = 4500;
 
@@ -9,6 +11,7 @@ function ResumenCompra() {
   const { state } = useLocation();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { addTicketSale } = usePurchases();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const total = (state?.selectedSeats?.length ?? 0) * TICKET_PRICE;
@@ -21,14 +24,16 @@ function ResumenCompra() {
     setSaving(true);
     setError("");
     try {
-      await createPurchase({
+      const purchase = await createPurchase({
         userId: user.id,
         movieId: state.movie.id,
         showId: state.show.id,
         seats: state.selectedSeats,
         total,
         status: "confirmed",
+        movieTitle: state.movie.title,
       });
+      addTicketSale({ ...purchase, movieTitle: state.movie.title });
       navigate('/dashboard', { state: { confirmation: `Reserva confirmada para ${state.movie.title}.` } });
     } catch (requestError) {
       setError(requestError.message);
@@ -47,7 +52,7 @@ function ResumenCompra() {
       <p className="summary-total"><span>Total</span><strong>₡{total.toLocaleString('es-CR')}</strong></p>
     </div>
     {error && <p className="error-message">{error}</p>}
-    <button className="btn-primary" type="button" disabled={saving} onClick={confirmPurchase}>{saving ? 'Guardando reserva...' : 'Confirmar compra'}</button>
+    <motion.button className="btn-primary" type="button" disabled={saving} whileTap={{ scale: 0.97 }} onClick={confirmPurchase}>{saving ? 'Guardando reserva...' : 'Confirmar compra'}</motion.button>
   </section>;
 }
 

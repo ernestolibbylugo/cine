@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "../config";
+import { motion } from "framer-motion";
+import galaxiaImage from "../Img/imgGalaxiaPerdida.jpeg";
+import ultimaNocheImage from "../Img/imgLaUltimaNoche.jpeg";
+
+const movieImages = {
+  "Galaxia Perdida": galaxiaImage,
+  "La Última Noche": ultimaNocheImage,
+  "La Ultima la noche": ultimaNocheImage,
+};
 
 function Cartelera() {
   const [movies, setMovies] = useState([]);
@@ -52,16 +61,19 @@ function Cartelera() {
           <p>No hay películas disponibles.</p>
         ) : (
           movies.map((movie) => (
-            <article className="movie-card" key={movie.id}>
+            <motion.article className="movie-card" key={movie.id} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: movie.id * 0.08 }} whileHover={{ y: -7 }}>
+              <div className="movie-poster">
+                <img src={movieImages[movie.title]} alt={`Póster de ${movie.title}`} />
+                <span className="movie-rating">{movie.rating}</span>
+              </div>
               <div className="movie-card-body">
                 <div className="movie-card-heading">
                   <h3>{movie.title}</h3>
                   <span>{movie.duration} min</span>
                 </div>
                 <p className="movie-genre">{movie.genre}</p>
-                <span className="movie-rating">{movie.rating}</span>
               </div>
-            </article>
+            </motion.article>
           ))
         )}
       </section>

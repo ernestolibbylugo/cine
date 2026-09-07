@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import LogoutButton from './LogoutButton';
+import logo from '../Img/logoCinemaSein.jpeg';
 
 const navLinkClass = ({ isActive }) =>
   isActive ? 'nav-link active' : 'nav-link';
@@ -10,7 +11,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <NavLink to="/" className="nav-brand">CINE / 04</NavLink>
+      <NavLink to="/" className="nav-brand"><img src={logo} alt="Cinema SEIN" /><span> Cinema SEIN</span></NavLink>
       <div className="nav-links">
         <NavLink to="/cartelera" className={navLinkClass}>
           Cartelera

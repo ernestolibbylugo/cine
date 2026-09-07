@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
 :root {
   --color-accent: #ffbc3d;
   --color-accent-light: #ffd36f;
@@ -11,7 +13,7 @@
   --shadow: 0 12px 30px rgb(0 0 0 / 18%);
   --transition: all 0.2s ease;
   --color-red: #bd3f4d;
-  --font-display: 'Bodoni 72', 'Bodoni MT', Georgia, serif;
+  --font-display: 'Special Elite', 'Courier New', monospace;
 }
 
 * {
@@ -21,8 +23,8 @@
 }
 
 body {
-  font-family: 'Avenir Next', 'Century Gothic', sans-serif;
-  background: radial-gradient(circle at top right, #182638 0, var(--color-bg) 38rem);
+  font-family: 'Special Elite', 'Courier New', monospace;
+  background: var(--color-bg);
   color: var(--color-text);
   line-height: 1.5;
   min-height: 100vh;

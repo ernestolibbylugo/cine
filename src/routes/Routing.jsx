@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -18,8 +19,19 @@ import RutaProtegida from "../components/RutaProtegida";
  * Las rutas protegidas usan <RutaProtegida> con rolesPermitidos.
  */
 function Routing() {
+  const location = useLocation();
+
   return (
-    <Routes>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        className="route-frame"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        transition={{ duration: 0.28, ease: "easeOut" }}
+      >
+    <Routes location={location}>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/cartelera" element={<Cartelera />} />
@@ -50,6 +62,8 @@ function Routing() {
         element={<Navigate to="/cartelera" replace />}
       />
     </Routes>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 

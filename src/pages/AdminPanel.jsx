@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "../config";
+import { motion } from "framer-motion";
 
 function AdminPanel() {
   const [movies, setMovies] = useState([]);
@@ -45,7 +46,7 @@ function AdminPanel() {
   };
 
   return (
-    <main className="page admin-page">
+    <main className="page admin-page glass-panel">
       <h1>Panel de Administración</h1>
 
       {error && <p>{error}</p>}
@@ -55,7 +56,7 @@ function AdminPanel() {
       ) : (
         <div className="admin-actions">
           {movies.map((movie) => (
-            <article className="info-card" key={movie.id}>
+            <motion.article className="info-card" key={movie.id} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: movie.id * 0.08 }}>
               <h2>{movie.title}</h2>
 
               <p>Género: {movie.genre}</p>
@@ -63,7 +64,7 @@ function AdminPanel() {
               <button className="btn-danger" onClick={() => eliminarPelicula(movie.id)}>
                 Eliminar película
               </button>
-            </article>
+            </motion.article>
           ))}
         </div>
       )}

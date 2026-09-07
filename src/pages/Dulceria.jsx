@@ -2,6 +2,18 @@ import { useEffect, useState } from "react";
 import { API_URL } from "../config";
 import { createPurchase } from "../services/api";
 import { useAuth } from "../context/AuthContext";
+import { motion } from "framer-motion";
+import popcornImage from "../Img/imgPalomita.jpeg";
+import sodaImage from "../Img/imgRefresco.jpeg";
+import comboImage from "../Img/imgComboPareja.jpeg";
+
+const snackImages = {
+  "Palomitas medianas": popcornImage,
+  "Refresco grande": sodaImage,
+  "Refresco Grande": sodaImage,
+  "Combo pareja": comboImage,
+  "Combo Pareja": comboImage,
+};
 
 function Dulceria() {
   const [snacks, setSnacks] = useState([]);
@@ -75,15 +87,16 @@ function Dulceria() {
           <p>No hay productos disponibles.</p>
         ) : (
           snacks.map((snack) => (
-            <article className="snack-card" key={snack.id}>
+            <motion.article className="snack-card glass-panel" key={snack.id} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: snack.id * 0.08 }} whileHover={{ y: -7 }}>
+              <div className="snack-art"><img src={snackImages[snack.name]} alt={snack.name} /></div>
               <div className="snack-card-body">
                 <h3>{snack.name}</h3>
                 <div className="snack-card-footer">
                   <strong>₡{snack.price}</strong>
-                  <button type="button" className="btn-add" onClick={() => addSnack(snack)}>Añadir</button>
+                  <motion.button type="button" className="btn-add" whileTap={{ scale: 0.94 }} onClick={() => addSnack(snack)}>Añadir</motion.button>
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))
         )}
       </section>
