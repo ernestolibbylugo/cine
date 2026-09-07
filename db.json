@@ -183,6 +183,60 @@
       "status": "confirmed",
       "createdAt": "2026-09-07T04:41:16.127Z",
       "id": "rGbEeG9Qa-w"
+    },
+    {
+      "userId": "2",
+      "tickets": [
+        {
+          "movieId": "2",
+          "movieTitle": "La Última Noche",
+          "showId": "3",
+          "showTime": "19:30",
+          "quantity": 2
+        }
+      ],
+      "snacks": [],
+      "total": 9000,
+      "status": "confirmed",
+      "createdAt": "2026-09-07T15:25:38.104Z",
+      "id": "ktWiOKvjq10"
+    },
+    {
+      "userId": "2",
+      "snacks": [
+        {
+          "id": "3",
+          "name": "Combo pareja",
+          "quantity": 1
+        }
+      ],
+      "total": 6500,
+      "status": "confirmed",
+      "createdAt": "2026-09-07T15:26:08.023Z",
+      "id": "er0DIk6d5u8"
+    },
+    {
+      "userId": "2",
+      "tickets": [
+        {
+          "movieId": "1",
+          "movieTitle": "Galaxia Perdida",
+          "showId": "1",
+          "showTime": "18:00",
+          "quantity": 1
+        }
+      ],
+      "snacks": [
+        {
+          "id": "3",
+          "name": "Combo pareja",
+          "quantity": 1
+        }
+      ],
+      "total": 11000,
+      "status": "confirmed",
+      "createdAt": "2026-09-07T15:26:16.192Z",
+      "id": "FGc-j2SHxWM"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
